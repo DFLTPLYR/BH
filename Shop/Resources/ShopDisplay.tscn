@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Shop/Resources/ShopDisplay.gd" type="Script" id=1]
+
+[node name="ShopDisplay" type="GridContainer"]
+margin_left = 89.0
+margin_top = 107.0
+margin_right = 89.0
+margin_bottom = 107.0
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 3
+script = ExtResource( 1 )

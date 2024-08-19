@@ -1,0 +1,280 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://Actors/Enemies/Outline.tres" type="Material" id=1]
+[ext_resource path="res://Assests/Actors/Enemy/orc.png" type="Texture" id=2]
+[ext_resource path="res://Actors/Enemies/charger_enemy.gd" type="Script" id=3]
+[ext_resource path="res://Actors/neutral/Hurtbox.gd" type="Script" id=4]
+[ext_resource path="res://Actors/neutral/Health_Component.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Actors/neutral/Blood_particles.tscn" type="PackedScene" id=6]
+
+[sub_resource type="CapsuleShape2D" id=11]
+radius = 6.0
+height = 10.0
+
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 8.0
+height = 8.0
+
+[sub_resource type="Gradient" id=17]
+colors = PoolColorArray( 1, 0, 0, 1, 1, 0, 0, 0.305882 )
+
+[sub_resource type="GradientTexture" id=14]
+gradient = SubResource( 17 )
+
+[sub_resource type="Curve" id=18]
+_data = [ Vector2( 0, 0.5 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=16]
+curve = SubResource( 18 )
+
+[sub_resource type="ParticlesMaterial" id=19]
+flag_disable_z = true
+spread = 43.36
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 10.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = 70.21
+tangential_accel = 78.72
+scale_curve = SubResource( 16 )
+color_ramp = SubResource( 14 )
+
+[sub_resource type="CapsuleShape2D" id=13]
+radius = 8.0
+height = 8.0
+
+[sub_resource type="Gradient" id=4]
+interpolation_mode = 1
+colors = PoolColorArray( 1, 1, 1, 1, 0.487305, 0.34454, 0.34454, 1 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+
+[sub_resource type="Curve" id=6]
+max_value = 100.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 100 ), 551.824, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=8]
+emission_shape = 1
+emission_sphere_radius = 2.34
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 90, 0 )
+angular_velocity = 720.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = -60.0
+linear_accel_random = 1.0
+damping_curve = SubResource( 7 )
+color = Color( 0.741176, 0.698039, 0.698039, 1 )
+color_ramp = SubResource( 5 )
+
+[sub_resource type="Animation" id=9]
+resource_name = "Charge"
+length = 0.4
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.049038, 0.099038, 0.149038, 0.2, 0.25, 0.3, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 0, 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Particles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:material:shader_param/line_thickness")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.226, 0.8, 0.226 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Particles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:material:shader_param/line_thickness")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.226 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Walking"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Particles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[node name="Simple_charger" type="KinematicBody2D"]
+collision_layer = 4
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+Health_Component = NodePath("Health_Component")
+HurtBox_Component = NodePath("Hurt_box")
+Health = 100.0
+Damage = 50.0
+SPEED = 70
+DASH_SPEED = 140
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -9 )
+shape = SubResource( 11 )
+disabled = true
+
+[node name="Health_Component" parent="." instance=ExtResource( 5 )]
+collision_layer = 4
+collision_mask = 8
+parent = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Health_Component"]
+position = Vector2( 0, -9 )
+shape = SubResource( 12 )
+
+[node name="Blood_particles" parent="Health_Component" instance=ExtResource( 6 )]
+process_material = SubResource( 19 )
+
+[node name="Hurt_box" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 4 )
+parent = NodePath("..")
+collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurt_box"]
+position = Vector2( 0, -9 )
+shape = SubResource( 13 )
+
+[node name="Raycast2D" type="RayCast2D" parent="."]
+position = Vector2( 2, -13 )
+enabled = true
+cast_to = Vector2( 50, 0 )
+collision_mask = 2
+
+[node name="Particles2D" type="Particles2D" parent="."]
+amount = 16
+speed_scale = 2.88
+fract_delta = false
+local_coords = false
+draw_order = 1
+process_material = SubResource( 8 )
+
+[node name="Hand" type="Position2D" parent="."]
+position = Vector2( -2, -6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Walking"
+anims/Charge = SubResource( 9 )
+anims/Idle = SubResource( 10 )
+anims/Walking = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = ExtResource( 1 )
+position = Vector2( 0, -14 )
+texture = ExtResource( 2 )
+hframes = 4
+vframes = 2
+frame = 1

@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Actors/neutral/Hitbox.gd" type="Script" id=1]
+[ext_resource path="res://Actors/neutral/Blood_particles.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Gradient" id=13]
+colors = PoolColorArray( 1, 0, 0, 1, 1, 0, 0, 0.305882 )
+
+[sub_resource type="GradientTexture" id=16]
+gradient = SubResource( 13 )
+
+[sub_resource type="Curve" id=15]
+_data = [ Vector2( 0, 0.5 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=17]
+curve = SubResource( 15 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+flag_disable_z = true
+spread = 43.36
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 10.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = 70.21
+tangential_accel = 78.72
+scale_curve = SubResource( 17 )
+color_ramp = SubResource( 16 )
+
+[node name="Health_Box" type="Area2D"]
+script = ExtResource( 1 )
+
+[node name="Blood_particles" parent="." instance=ExtResource( 4 )]
+process_material = SubResource( 12 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,0 +1,210 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Assests/Actors/Enemy/ranger.png" type="Texture" id=1]
+[ext_resource path="res://Actors/Enemies/melee_enemy.gd" type="Script" id=2]
+[ext_resource path="res://Actors/Enemies/Outline.tres" type="Material" id=3]
+[ext_resource path="res://Actors/neutral/Hurtbox.gd" type="Script" id=4]
+[ext_resource path="res://Actors/neutral/Hitbox.gd" type="Script" id=5]
+[ext_resource path="res://Actors/neutral/Blood_particles.tscn" type="PackedScene" id=6]
+
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 6.0
+height = 0.0
+
+[sub_resource type="Animation" id=1]
+resource_name = "Idle"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("RayCast2D:enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 22 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RayCast2D/Hurt_box/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "attack"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 41, 42, 43, 44, 45, 46, 47 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("RayCast2D:enabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("RayCast2D/Hurt_box/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 21, 22, 23, 24, 25, 28 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "walk"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 10, 11, 12, 13, 14, 15, 16, 17 ]
+}
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 7, 18 )
+
+[sub_resource type="CapsuleShape2D" id=10]
+height = 6.0
+
+[node name="melee_enemy" type="KinematicBody2D"]
+collision_layer = 0
+script = ExtResource( 2 )
+Health_Component = NodePath("Hitbox")
+HurtBox_Component = NodePath("RayCast2D/Hurt_box")
+Health = 100.0
+Damage = 10
+SPEED = 50
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 15 )
+shape = SubResource( 9 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = ExtResource( 3 )
+position = Vector2( 0, -1 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+hframes = 10
+vframes = 9
+frame = 22
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Idle = SubResource( 1 )
+anims/RESET = SubResource( 7 )
+anims/attack = SubResource( 3 )
+anims/death = SubResource( 8 )
+anims/walk = SubResource( 4 )
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource( 5 )
+parent = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 0, -3 )
+shape = SubResource( 11 )
+
+[node name="Blood_particles" parent="Hitbox" instance=ExtResource( 6 )]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 1, -7 )
+enabled = true
+cast_to = Vector2( 22, 0 )
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Hurt_box" type="Area2D" parent="RayCast2D"]
+position = Vector2( 1, 0 )
+collision_layer = 128
+collision_mask = 2
+script = ExtResource( 4 )
+parent = NodePath("../..")
+collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RayCast2D/Hurt_box"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 10, 0 )
+shape = SubResource( 10 )

@@ -1,0 +1,221 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assests/Inventory/inventoryTabBG.png" type="Texture" id=1]
+[ext_resource path="res://custom_tooltip/tab_attribute.gd" type="Script" id=2]
+[ext_resource path="res://custom_tooltip/Tooltip.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 32, 32 )
+margin_left = 6.04007
+margin_right = 6.04007
+margin_top = 5.91156
+margin_bottom = 5.91156
+
+[sub_resource type="Theme" id=2]
+PanelContainer/styles/panel = SubResource( 1 )
+
+[node name="Tooltip_ui" type="CanvasLayer"]
+layer = 50
+
+[node name="Tooltip" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -155.0
+margin_top = -334.0
+margin_right = -103.92
+margin_bottom = -200.133
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 0.5, 0.5 )
+theme = SubResource( 2 )
+script = ExtResource( 3 )
+
+[node name="attribute_divider" type="GridContainer" parent="Tooltip"]
+margin_left = 6.04007
+margin_top = 5.91156
+margin_right = 45.0401
+margin_bottom = 127.955
+
+[node name="attribute" type="GridContainer" parent="Tooltip/attribute_divider"]
+margin_right = 39.0
+margin_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+script = ExtResource( 2 )
+attribute_name = "Damage:"
+attribute_value = NodePath("value")
+
+[node name="Attribute_Name" type="Label" parent="Tooltip/attribute_divider/attribute"]
+margin_right = 35.0
+margin_bottom = 14.0
+text = "item:"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="value" type="Label" parent="Tooltip/attribute_divider/attribute"]
+margin_left = 39.0
+margin_right = 39.0
+margin_bottom = 14.0
+align = 1
+valign = 1
+
+[node name="attribute2" type="GridContainer" parent="Tooltip/attribute_divider"]
+margin_top = 18.0
+margin_right = 39.0
+margin_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+script = ExtResource( 2 )
+attribute_name = "Firerate:"
+attribute_value = NodePath("value")
+
+[node name="Attribute_Name" type="Label" parent="Tooltip/attribute_divider/attribute2"]
+margin_right = 35.0
+margin_bottom = 14.0
+text = "item:"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="value" type="Label" parent="Tooltip/attribute_divider/attribute2"]
+margin_left = 39.0
+margin_right = 39.0
+margin_bottom = 14.0
+align = 1
+valign = 1
+
+[node name="attribute3" type="GridContainer" parent="Tooltip/attribute_divider"]
+margin_top = 36.0
+margin_right = 39.0
+margin_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+script = ExtResource( 2 )
+attribute_name = "ReloadSpeed:"
+attribute_value = NodePath("value")
+
+[node name="Attribute_Name" type="Label" parent="Tooltip/attribute_divider/attribute3"]
+margin_right = 35.0
+margin_bottom = 14.0
+text = "item:"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="value" type="Label" parent="Tooltip/attribute_divider/attribute3"]
+margin_left = 39.0
+margin_right = 39.0
+margin_bottom = 14.0
+align = 1
+valign = 1
+
+[node name="attribute4" type="GridContainer" parent="Tooltip/attribute_divider"]
+margin_top = 54.0
+margin_right = 39.0
+margin_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+script = ExtResource( 2 )
+attribute_name = "Accuracy:"
+attribute_value = NodePath("value")
+
+[node name="Attribute_Name" type="Label" parent="Tooltip/attribute_divider/attribute4"]
+margin_right = 35.0
+margin_bottom = 14.0
+text = "item:"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="value" type="Label" parent="Tooltip/attribute_divider/attribute4"]
+margin_left = 39.0
+margin_right = 39.0
+margin_bottom = 14.0
+align = 1
+valign = 1
+
+[node name="attribute5" type="GridContainer" parent="Tooltip/attribute_divider"]
+margin_top = 72.0
+margin_right = 39.0
+margin_bottom = 86.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+script = ExtResource( 2 )
+attribute_name = "magazine:"
+attribute_value = NodePath("value")
+
+[node name="Attribute_Name" type="Label" parent="Tooltip/attribute_divider/attribute5"]
+margin_right = 35.0
+margin_bottom = 14.0
+text = "item:"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="value" type="Label" parent="Tooltip/attribute_divider/attribute5"]
+margin_left = 39.0
+margin_right = 39.0
+margin_bottom = 14.0
+align = 1
+valign = 1
+
+[node name="attribute6" type="GridContainer" parent="Tooltip/attribute_divider"]
+margin_top = 90.0
+margin_right = 39.0
+margin_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+script = ExtResource( 2 )
+attribute_name = "rarity:"
+attribute_value = NodePath("value")
+
+[node name="Attribute_Name" type="Label" parent="Tooltip/attribute_divider/attribute6"]
+margin_right = 35.0
+margin_bottom = 14.0
+text = "item:"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="value" type="Label" parent="Tooltip/attribute_divider/attribute6"]
+margin_left = 39.0
+margin_right = 39.0
+margin_bottom = 14.0
+align = 1
+valign = 1
+
+[node name="attribute7" type="GridContainer" parent="Tooltip/attribute_divider"]
+margin_top = 108.0
+margin_right = 39.0
+margin_bottom = 122.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+script = ExtResource( 2 )
+attribute_name = "cost:"
+attribute_value = NodePath("value")
+
+[node name="Attribute_Name" type="Label" parent="Tooltip/attribute_divider/attribute7"]
+margin_right = 35.0
+margin_bottom = 14.0
+text = "item:"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="value" type="Label" parent="Tooltip/attribute_divider/attribute7"]
+margin_left = 39.0
+margin_right = 39.0
+margin_bottom = 14.0
+align = 1
+valign = 1

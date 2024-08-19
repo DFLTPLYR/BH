@@ -1,0 +1,89 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Actors/Player/Crow.gd" type="Script" id=1]
+[ext_resource path="res://Actors/neutral/LightSources/Lamp.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Actors/Player/PlayerBase.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assests/Actors/Player/crow.png" type="Texture" id=4]
+[ext_resource path="res://Actors/neutral/Hitbox.gd" type="Script" id=5]
+[ext_resource path="res://Actors/Player/GunPos.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Inventory/Resources/CrowInventory.tres" type="Resource" id=7]
+[ext_resource path="res://Assests/Actors/Player/Crow_profile.png" type="Texture" id=8]
+[ext_resource path="res://Actors/neutral/Blood_particles.tscn" type="PackedScene" id=9]
+
+[sub_resource type="CapsuleShape2D" id=34]
+radius = 5.0
+height = 16.0
+
+[sub_resource type="RectangleShape2D" id=35]
+extents = Vector2( 5, 14 )
+
+[sub_resource type="Animation" id=32]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 5 ]
+}
+
+[sub_resource type="Animation" id=33]
+resource_name = "Walking"
+length = 0.4
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 6, 7, 7 ]
+}
+
+[node name="Crow" instance=ExtResource( 3 )]
+z_index = 9
+collision_layer = 0
+collision_mask = 1
+script = ExtResource( 1 )
+picture = ExtResource( 8 )
+Inventory_Resource = ExtResource( 7 )
+Gun_Positions = ExtResource( 6 )
+Light_Source = ExtResource( 2 )
+eye_sight = Vector2( 0.75, 0.75 )
+safe_range = 150
+speed = 120
+Health_Component = NodePath("Hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+shape = SubResource( 34 )
+
+[node name="Hitbox" type="Area2D" parent="." index="1"]
+collision_layer = 2
+collision_mask = 144
+script = ExtResource( 5 )
+parent = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource( 35 )
+
+[node name="Blood_particles" parent="Hitbox" index="1" instance=ExtResource( 9 )]
+
+[node name="Sprite" parent="." index="2"]
+texture = ExtResource( 4 )
+hframes = 4
+vframes = 2
+frame = 5
+
+[node name="AnimationPlayer" parent="." index="3"]
+anims/RESET = SubResource( 32 )
+anims/Walking = SubResource( 33 )

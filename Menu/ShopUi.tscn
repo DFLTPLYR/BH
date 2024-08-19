@@ -1,0 +1,152 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assests/Inventory/refresh3.png" type="Texture" id=3]
+[ext_resource path="res://Assests/Inventory/refresh2.png" type="Texture" id=4]
+[ext_resource path="res://Assests/Inventory/refresh1.png" type="Texture" id=5]
+[ext_resource path="res://Assests/Inventory/ItemSocket.png" type="Texture" id=6]
+[ext_resource path="res://Assests/Inventory/refresh.png" type="Texture" id=7]
+[ext_resource path="res://Assests/Font/BleedingPixels.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Shop/Resources/ShopDisplay.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Shop/Resources/ShopSlotDisplay.tscn" type="PackedScene" id=10]
+
+[sub_resource type="DynamicFont" id=3]
+outline_size = 1
+outline_color = Color( 0.67451, 0.0431373, 0.0431373, 1 )
+font_data = ExtResource( 8 )
+
+[sub_resource type="AnimatedTexture" id=4]
+frames = 4
+frame_0/texture = ExtResource( 7 )
+frame_1/texture = ExtResource( 5 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 4 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 3 )
+frame_3/delay_sec = 0.0
+
+[node name="ShopUi" type="CanvasLayer"]
+
+[node name="ShopWindow" type="NinePatchRect" parent="."]
+margin_left = 10.0
+margin_top = 187.0
+margin_right = 142.0
+margin_bottom = 351.0
+texture = ExtResource( 6 )
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 6
+
+[node name="CenterContainer" type="CenterContainer" parent="ShopWindow"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 29.0
+margin_right = -1.0
+mouse_filter = 2
+
+[node name="ShopDisplay" parent="ShopWindow/CenterContainer" instance=ExtResource( 9 )]
+margin_left = 7.0
+margin_top = 9.0
+margin_right = 123.0
+margin_bottom = 125.0
+custom_constants/vseparation = 10
+custom_constants/hseparation = 10
+
+[node name="ShopSlotDisplay" parent="ShopWindow/CenterContainer/ShopDisplay" instance=ExtResource( 10 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 32.0
+margin_bottom = 32.0
+button = NodePath("../../../Button")
+
+[node name="ShopSlotDisplay2" parent="ShopWindow/CenterContainer/ShopDisplay" instance=ExtResource( 10 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 42.0
+margin_right = 74.0
+margin_bottom = 32.0
+button = NodePath("../../../Button")
+
+[node name="ShopSlotDisplay3" parent="ShopWindow/CenterContainer/ShopDisplay" instance=ExtResource( 10 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 84.0
+margin_right = 116.0
+margin_bottom = 32.0
+button = NodePath("../../../Button")
+
+[node name="ShopSlotDisplay4" parent="ShopWindow/CenterContainer/ShopDisplay" instance=ExtResource( 10 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 42.0
+margin_right = 32.0
+margin_bottom = 74.0
+button = NodePath("../../../Button")
+
+[node name="ShopSlotDisplay5" parent="ShopWindow/CenterContainer/ShopDisplay" instance=ExtResource( 10 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 42.0
+margin_top = 42.0
+margin_right = 74.0
+margin_bottom = 74.0
+button = NodePath("../../../Button")
+
+[node name="ShopSlotDisplay6" parent="ShopWindow/CenterContainer/ShopDisplay" instance=ExtResource( 10 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 84.0
+margin_top = 42.0
+margin_right = 116.0
+margin_bottom = 74.0
+button = NodePath("../../../Button")
+
+[node name="ShopSlotDisplay7" parent="ShopWindow/CenterContainer/ShopDisplay" instance=ExtResource( 10 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 84.0
+margin_right = 32.0
+margin_bottom = 116.0
+button = NodePath("../../../Button")
+
+[node name="ShopSlotDisplay8" parent="ShopWindow/CenterContainer/ShopDisplay" instance=ExtResource( 10 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 42.0
+margin_top = 84.0
+margin_right = 74.0
+margin_bottom = 116.0
+button = NodePath("../../../Button")
+
+[node name="ShopSlotDisplay9" parent="ShopWindow/CenterContainer/ShopDisplay" instance=ExtResource( 10 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 84.0
+margin_top = 84.0
+margin_right = 116.0
+margin_bottom = 116.0
+button = NodePath("../../../Button")
+
+[node name="Label" type="Label" parent="ShopWindow"]
+margin_left = 11.0
+margin_top = 13.0
+margin_right = 54.0
+margin_bottom = 48.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.317647, 0.14902, 0.14902, 1 )
+custom_fonts/font = SubResource( 3 )
+text = "Shop
+"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Button" type="TextureButton" parent="ShopWindow"]
+margin_left = 93.0
+margin_top = 5.0
+margin_right = 125.0
+margin_bottom = 37.0
+focus_mode = 1
+mouse_default_cursor_shape = 2
+enabled_focus_mode = 1
+texture_normal = SubResource( 4 )

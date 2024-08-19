@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Actors/neutral/LightSources/Lamp.gd" type="Script" id=1]
+[ext_resource path="res://Assests/light/light.png" type="Texture" id=2]
+[ext_resource path="res://Assests/light/lamp3.png" type="Texture" id=3]
+[ext_resource path="res://Assests/light/lamp1.png" type="Texture" id=4]
+[ext_resource path="res://Assests/light/lamp5.png" type="Texture" id=5]
+[ext_resource path="res://Assests/light/lamp2.png" type="Texture" id=6]
+[ext_resource path="res://Assests/light/lamp4.png" type="Texture" id=7]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 5 ) ],
+"loop": false,
+"name": "default",
+"speed": 8.0
+} ]
+
+[sub_resource type="CircleShape2D" id=22]
+radius = 65.123
+
+[sub_resource type="Animation" id=21]
+resource_name = "dim"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.4, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 0 ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "dim2"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.4, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 0 ]
+}
+
+[node name="Lamp" type="AnimatedSprite"]
+position = Vector2( 20, 0 )
+frames = SubResource( 1 )
+frame = 4
+playing = true
+offset = Vector2( 0, -15 )
+flip_h = true
+script = ExtResource( 1 )
+refill_rate = 0.5
+fuel_capacity = 2.0
+fuel_tank = 2.0
+
+[node name="Light2D" type="Light2D" parent="."]
+scale = Vector2( 2, 1.75 )
+texture = ExtResource( 2 )
+texture_scale = 2.0
+energy = 0.9
+mode = 2
+shadow_color = Color( 0, 0.462745, 1, 1 )
+shadow_gradient_length = 1592.7
+shadow_filter_smooth = 28.1
+
+[node name="LampArea" type="Area2D" parent="Light2D"]
+collision_layer = 64
+collision_mask = 68
+
+[node name="Shape" type="CollisionShape2D" parent="Light2D/LampArea"]
+shape = SubResource( 22 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "dim"
+anims/dim = SubResource( 21 )
+anims/dim2 = SubResource( 23 )

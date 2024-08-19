@@ -1,0 +1,31 @@
+[gd_resource type="Resource" load_steps=6 format=2]
+
+[ext_resource path="res://Inventory/Resources/GunRes.gd" type="Script" id=1]
+[ext_resource path="res://Gun_prefabs/Stats.gd" type="Script" id=2]
+[ext_resource path="res://Assests/Weapon/Single Sprite/p90.png" type="Texture" id=3]
+[ext_resource path="res://Actors/Projectiles/NormalBullet.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 2 )
+bullet_path = ExtResource( 4 )
+min_dmg = 5
+max_dmg = 30
+min_mag = 5
+max_mag = 10
+min_accuracy = 10
+max_accuracy = 40
+min_firerate = 0.05
+max_firerate = 0.5
+min_reloadSpeed = 0.5
+max_reloadSpeed = 1.0
+Cost = 207
+rayLOS = 180
+
+[resource]
+script = ExtResource( 1 )
+name = "p90"
+texture = ExtResource( 3 )
+scene_path = "res://Gun_prefabs/Weapon_Scene/P90.tscn"
+stats = SubResource( 1 )
+stat = "res://Gun_prefabs/stats/p90.tres"

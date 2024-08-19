@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Gun_prefabs/Stats.gd" type="Script" id=1]
+[ext_resource path="res://Actors/Projectiles/NormalBullet.tscn" type="PackedScene" id=2]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource( 1 )
+bullet_path = ExtResource( 2 )
+min_dmg = 5
+max_dmg = 30
+min_mag = 5
+max_mag = 10
+min_accuracy = 10
+max_accuracy = 40
+min_firerate = 0.05
+max_firerate = 0.5
+min_reloadSpeed = 0.5
+max_reloadSpeed = 1.0
+Cost = 0
+rayLOS = 180

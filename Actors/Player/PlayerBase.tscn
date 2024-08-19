@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Actors/Player/PlayerBase.gd" type="Script" id=3]
+
+[node name="Player" type="KinematicBody2D"]
+z_index = 8
+collision_layer = 2
+collision_mask = 20
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

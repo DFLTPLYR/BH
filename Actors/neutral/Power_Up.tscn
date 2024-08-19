@@ -1,0 +1,104 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Actors/neutral/Power_Up.gd" type="Script" id=1]
+[ext_resource path="res://Assests/light/light.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 34.0
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("item_rect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -11 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("item_rect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "dissolve"
+tracks/0/type = "value"
+tracks/0/path = NodePath("item_rect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "spawned"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("item_rect:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -11 ), Vector2( 0, -20 ), Vector2( 0, -11 ) ]
+}
+
+[node name="item_name" type="Area2D"]
+scale = Vector2( 0.75, 1 )
+z_index = 10
+collision_layer = 0
+collision_mask = 2
+script = ExtResource( 1 )
+power_item = NodePath(".")
+item_rect = NodePath("item_rect")
+item_name = NodePath("item_rect/itemName")
+animations = NodePath("animations")
+
+[node name="Light2D" type="Light2D" parent="."]
+scale = Vector2( 1, 0.75 )
+texture = ExtResource( 3 )
+mode = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1 )
+scale = Vector2( 1, 0.75 )
+shape = SubResource( 1 )
+
+[node name="item_rect" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 0, -11 )
+scale = Vector2( 1.75, 1.375 )
+z_index = 9
+
+[node name="itemName" type="Label" parent="item_rect"]
+margin_left = -18.0
+margin_top = -22.0
+margin_right = 18.0
+margin_bottom = -8.0
+text = "name"
+
+[node name="animations" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 2 )
+anims/dissolve = SubResource( 4 )
+anims/spawned = SubResource( 3 )

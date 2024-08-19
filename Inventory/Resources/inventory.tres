@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Gun_prefabs/Weapon_tres/Pistol.tres" type="Resource" id=1]
+[ext_resource path="res://Inventory/Resources/Inventory.gd" type="Script" id=4]
+
+[resource]
+resource_name = "PlayerInventory"
+script = ExtResource( 4 )
+items = [ ExtResource( 1 ), null, null, null, null, null ]

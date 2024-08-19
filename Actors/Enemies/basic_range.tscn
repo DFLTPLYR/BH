@@ -1,0 +1,263 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Actors/neutral/Health_Box.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assests/Actors/Enemy/ranger.png" type="Texture" id=2]
+[ext_resource path="res://Actors/Enemies/Outline.tres" type="Material" id=3]
+[ext_resource path="res://Actors/SoftCollision.tscn" type="PackedScene" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody2D
+
+enum STATE {
+	Move,
+	Fallback,
+	Attack
+}
+
+export (NodePath) onready var Health_Component = get_node(Health_Component) as Area2D
+onready var projectile_pos: RayCast2D = $projectile_pos
+onready var animations: AnimationPlayer = $Animations
+onready var mouth: Position2D = $projectile_pos/mouth
+onready var sprite: Sprite = $Sprite
+onready var timer: Timer = $Timer
+onready var soft_collision: Area2D = $SoftCollision
+
+export var Health:int
+export var Damage:int
+export var SPEED:int
+export var ATTACK_SPEED:float
+
+var projectile = preload(\"res://Actors/Enemies/basic_projectile.tscn\")
+var velocity = Vector2.ZERO
+var dir = Vector2.ZERO
+var target = null
+var attacking = true
+
+var state = STATE.Move
+
+func _ready() -> void:
+	randomize()
+	rand_stats()
+	add_to_group(\"Enemies\")
+	Health_Component.connect(\"damage_dealt\", self, \"take_hit\")
+	timer.connect(\"timeout\", self, \"reset_attack\")
+
+func _physics_process(delta: float) -> void:
+	if velocity.x <= 0:
+		sprite.flip_h = true
+	elif velocity.x >= 1:
+		sprite.flip_h = false
+
+	match state:
+		STATE.Move:
+			move_state(delta)
+		STATE.Fallback:
+			fallback_state(delta)
+		STATE.Attack:
+			attack_state(delta)
+	
+	if is_instance_valid(Signals.player_Selected):
+		projectile_pos.look_at(Signals.player_pos)
+
+	if projectile_pos.is_colliding() and attacking:
+		state = STATE.Attack
+
+	velocity = move_and_slide(velocity)
+
+	if soft_collision.is_colliding():
+		velocity += soft_collision.get_push_vector() * delta * 400
+
+func rand_stats():
+	var chance = ShopItems.rng.randi_range(1,100)
+	if chance >= 90:
+		Damage += Signals.difficulty * Damage
+		Health += Signals.difficulty * Health
+		SPEED += Signals.difficulty * SPEED
+		ATTACK_SPEED -= Signals.difficulty / ATTACK_SPEED
+	if chance >= 80:
+		Health += Signals.difficulty * Health
+		SPEED += Signals.difficulty * SPEED
+		ATTACK_SPEED -= Signals.difficulty / ATTACK_SPEED
+	if chance >= 40:
+		SPEED += Signals.difficulty * SPEED
+		ATTACK_SPEED -= Signals.difficulty / ATTACK_SPEED
+	if chance >= 1:
+		Health += Signals.difficulty * Health
+
+func move_state(delta):
+	animations.play(\"walk\")
+	if Signals.player_Selected:
+		dir = global_position.direction_to(Signals.player_pos)
+		velocity = dir * SPEED
+		velocity = velocity.move_toward(dir * SPEED, delta)
+
+func fallback_state(delta):
+	animations.play(\"walk\")
+	dir = global_position.direction_to(Signals.player_pos)
+	velocity = -dir * SPEED
+	velocity = velocity.move_toward(dir * SPEED, -delta)
+	
+	if attacking:
+		state = STATE.Move
+
+func attack_state(delta):
+	velocity = Vector2.ZERO
+	create_casting_time(2)
+
+func create_casting_time(value):
+	var cast_time = Timer.new()
+	add_child(cast_time)
+	cast_time.start(value)
+	cast_time.connect(\"timeout\", cast_time, \"queue_free\")
+	cast_time.connect(\"timeout\", self, \"fire\")
+
+func fire():
+	if attacking:
+		var scene = get_tree().root	
+		var child = projectile.instance()
+		child.Damage = Damage
+		child.transform = mouth.global_transform
+		scene.add_child(child)
+		attacking = false
+		timer.start(ATTACK_SPEED)
+		state = STATE.Fallback
+	
+
+func reset_attack():
+	attacking = true
+
+func take_hit(value):
+	if Health >= 0:
+		Health -= value
+	if Health <= 0:
+		death()
+
+func death():
+	var child = load(\"res://Actors/Pickables/Shard.tscn\") as PackedScene
+	child = child.instance()
+	var scene = get_tree().root
+	child.transform = global_transform
+	scene.call_deferred(\"add_child\", child)
+	queue_free()
+"
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 71 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "idle"
+length = 0.4
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 60, 61, 62, 63, 64, 65, 66, 67 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "walk"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 70, 71, 72, 73, 74, 75, 76 ]
+}
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 2.0
+height = 14.0
+
+[sub_resource type="CapsuleShape2D" id=7]
+radius = 5.0
+height = 9.0
+
+[sub_resource type="CircleShape2D" id=9]
+radius = 16.0312
+
+[node name="basic_range" type="KinematicBody2D"]
+collision_layer = 0
+script = SubResource( 1 )
+Health_Component = NodePath("Health_Box")
+Health = 25
+Damage = 15
+SPEED = 50
+ATTACK_SPEED = 3.0
+
+[node name="Animations" type="AnimationPlayer" parent="."]
+reset_on_save = false
+anims/RESET = SubResource( 3 )
+anims/idle = SubResource( 4 )
+anims/walk = SubResource( 5 )
+
+[node name="projectile_pos" type="RayCast2D" parent="."]
+position = Vector2( 4, -11 )
+enabled = true
+cast_to = Vector2( 75, 0 )
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="mouth" type="Position2D" parent="projectile_pos"]
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 16 )
+rotation = 1.5708
+shape = SubResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = ExtResource( 3 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+hframes = 10
+vframes = 9
+frame = 71
+
+[node name="Health_Box" parent="." instance=ExtResource( 1 )]
+scale = Vector2( 2, 2 )
+collision_layer = 4
+collision_mask = 8
+parent = NodePath("..")
+
+[node name="CollisionShape2D" parent="Health_Box" index="1"]
+position = Vector2( 0.5, -1 )
+shape = SubResource( 7 )
+
+[node name="SoftCollision" parent="." instance=ExtResource( 4 )]
+position = Vector2( 0, 16 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SoftCollision"]
+shape = SubResource( 9 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
+
+[editable path="Health_Box"]
+[editable path="SoftCollision"]
