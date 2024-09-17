@@ -207,7 +207,7 @@ shape = SubResource( 33 )
 
 [node name="Blacksmith" type="AnimatedSprite" parent="."]
 frames = SubResource( 9 )
-frame = 2
+frame = 4
 playing = true
 
 [node name="Area2D" type="Area2D" parent="Blacksmith"]
@@ -448,3 +448,7 @@ margin_bottom = 300.0
 text = "next_wave"
 script = ExtResource( 11 )
 parent_root = NodePath("../..")
+
+[node name="Timer" type="Timer" parent="UI/next_wave"]
+wait_time = 10.0
+autostart = true

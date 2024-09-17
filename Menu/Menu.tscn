@@ -938,7 +938,7 @@ mode = 2
 position = Vector2( 591, 179 )
 z_index = 1
 frames = SubResource( 45 )
-frame = 7
+frame = 1
 playing = true
 
 [node name="Area2D" type="Area2D" parent="HauntedHouse"]
